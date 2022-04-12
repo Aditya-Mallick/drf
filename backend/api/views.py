@@ -6,12 +6,12 @@ from rest_framework.response import Response
 from yaml import serialize
 
 from product.models import Product
-from product.serializers import ProductSerializers
+from product.serializers import ProductSerializer
 
 
 @api_view(['POST'])
 def api_home(request, *args, **kwargs):
-    serializer = ProductSerializers(data=request.data)
+    serializer = ProductSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
         # instance = serializer.save()
         print(serializer.data)
