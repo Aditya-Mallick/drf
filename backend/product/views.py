@@ -27,6 +27,26 @@ class ProductDetailApiView(generics.RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+class ProductUpdateApiView(generics.UpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+    def perform_create(self, serializer):
+        instance = serializer.save()
+        if not instance.content:
+            instance.content = instance.title
+    
+
+class ProductDestroyApiView(generics.DestroyAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = 'pk'
+
+    def perform_destroy(self, instance):
+        ## instance
+        super().perform_destroy(instance)
+
 # not gonna use this
 # class ProductDetailApiView(generics.RetrieveAPIView):
 #     queryset = Product.objects.all()
